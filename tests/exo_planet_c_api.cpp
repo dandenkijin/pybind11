@@ -1,13 +1,21 @@
 // Copyright (c) 2024 The pybind Community.
 
+// In production situations it is totally fine to build with
+// C++ Exception Handling enabled. However, here we want to ensure that
+// C++ Exception Handling is not required.
+#if defined(_MSC_VER) || defined(__EMSCRIPTEN__)
+// Too much trouble making the required cmake changes (see PR #5375).
+#else
+#    ifdef __cpp_exceptions
+#    error This test is meant to be built with C++ Exception Handling disabled, but __cpp_exceptions is defined.
+#    endif
+#    ifdef __EXCEPTIONS
+#    error This test is meant to be built with C++ Exception Handling disabled, but __EXCEPTIONS is defined.
+#    endif
+#endif
+
 // THIS MUST STAY AT THE TOP!
-#include <pybind11/pybind11.h> // EXCLUSIVELY for PYBIND11_PLATFORM_ABI_ID
-// Potential future direction to maximize reusability:
-// (e.g. for use from SWIG, Cython, PyCLIF, nanobind):
-//     #include <pybind11/compat/platform_abi_id.h>
-// This would only depend on:
-//     1. A C++ compiler, WITHOUT requiring -fexceptions.
-//     2. Python.h
+#include <pybind11/conduit/pybind11_conduit_v1.h> // VERY light-weight dependency.
 
 #include "test_cpp_conduit_traveler_types.h"
 

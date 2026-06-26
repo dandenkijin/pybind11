@@ -1422,8 +1422,8 @@ public:
     explicit array_t(ShapeContainer shape, const T *ptr = nullptr, handle base = handle())
         : array_t(private_ctor{},
                   std::move(shape),
-                  (ExtraFlags & f_style) != 0 ? detail::f_strides(*shape, itemsize())
-                                              : detail::c_strides(*shape, itemsize()),
+                  (ExtraFlags & f_style) != 0 ? detail::f_strides(*shape, sizeof(T))
+                                              : detail::c_strides(*shape, sizeof(T)),
                   ptr,
                   base) {}
 
