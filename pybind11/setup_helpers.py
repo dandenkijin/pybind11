@@ -245,11 +245,7 @@ def has_flag(compiler: Any, flag: str) -> bool:
         return True
 
 
-# Every call will cache the result
-cpp_flag_cache = None
-
-
-@lru_cache()
+@lru_cache
 def auto_cpp_level(compiler: Any) -> str | int:
     """
     Return the max supported C++ std level (17, 14, or 11). Returns latest on Windows.
@@ -338,7 +334,7 @@ def naive_recompile(obj: str, src: str) -> bool:
     return os.stat(obj).st_mtime < os.stat(src).st_mtime
 
 
-def no_recompile(obg: str, src: str) -> bool:  # noqa: ARG001
+def no_recompile(obj: str, src: str) -> bool:  # noqa: ARG001
     """
     This is the safest but slowest choice (and is the default) - will always
     recompile sources.
