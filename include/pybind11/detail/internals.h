@@ -284,7 +284,6 @@ struct instance_map_shard {
 
 static_assert(sizeof(instance_map_shard) % 64 == 0,
               "instance_map_shard size is not a multiple of 64 bytes");
-#endif
 
 inline uint64_t round_up_to_next_pow2(uint64_t x) {
     // Round-up to the next power of two.
@@ -465,10 +464,6 @@ struct native_enum_record {
 
     static const char *attribute_name() { return "__pybind11_native_enum__"; }
 };
-
-#define PYBIND11_PLATFORM_ABI_ID                                                                  \
-    PYBIND11_INTERNALS_KIND PYBIND11_COMPILER_TYPE PYBIND11_STDLIB PYBIND11_BUILD_ABI             \
-        PYBIND11_BUILD_TYPE
 
 #define PYBIND11_INTERNALS_ID                                                                     \
     "__pybind11_internals_v" PYBIND11_TOSTRING(PYBIND11_INTERNALS_VERSION)                        \
